@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Sidebar.js';
-import './Home.css';
+import '../layout/Sidebar.js';
+import '../../styles/Home.css';
 
 function Home() {
   return (

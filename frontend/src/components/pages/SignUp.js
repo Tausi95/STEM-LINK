@@ -9,7 +9,12 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email);
+  const validatePassword = (password) => password.length >= 8 && /\d/.test(password);
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
@@ -30,25 +35,28 @@ const SignUp = () => {
     setError('');
     setIsSubmitting(true);
 
-    // Add your sign-up logic here, e.g., API call to register user.
-    // Simulate async operation with setTimeout
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Sign-up successful!');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      setError('Something went wrong. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      alert('Sign-up successful!');
-    }, 2000);
-  };
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 8 && /\d/.test(password); // Password should be 8 characters and contain a number
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    }
   };
 
   return (
@@ -74,11 +82,7 @@ const SignUp = () => {
             required
             placeholder="Enter your password"
           />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={togglePasswordVisibility}
-          >
+          <button type="button" onClick={togglePasswordVisibility}>
             {showPassword ? 'Hide' : 'Show'}
           </button>
         </div>

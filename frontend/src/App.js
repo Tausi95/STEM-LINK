@@ -1,23 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Intro from './components/Intro';
-import Sidebar from './components/Sidebar';
-import About from './components/About';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import Network from './components/Network';
-import Events from './components/Events';
-import Features from './components/Features';
-import Mentorship from './components/Mentorship';
-import Blogs from './components/Blogs';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import Calculator from './components/Calculator';
-import Design from './components/Design';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import Intro from './components/layout/Intro';
+import Sidebar from './components/layout/Sidebar';
+import About from './components/pages/About';
+import Home from './components/pages/Home';
+import Profile from './components/pages/Profile';
+import Network from './components/features/Network';
+import Events from './components/features/Events';
+import Features from './components/pages/Features';
+import Mentorship from './components/features/Mentorship';
+import Blogs from './components/featuresBlogs';
+import Login from './components/pages/Login';
+import SignUp from './components/pages/SignUp';
+import Calculator from './components/features/Calculator';
+import Design from './components/features/Design';
 
-import SubjectDetail from './pages/SubjectDetail';
+import SubjectDetail from './components/pages/SubjectDetail';
 
 function App() {
   return (

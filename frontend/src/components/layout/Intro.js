@@ -1,7 +1,7 @@
 // src/components/Intro.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Intro.css';
+import '../../styles/Intro.css';
 
 const Intro = () => {
   return (
@@ -9,7 +9,7 @@ const Intro = () => {
       <div className="cover-image">
         {/* Add your cover image here */}
       </div>
-      <h1>ASSETHub</h1>
+      <h1>STEM-LINK</h1>
       <p>Your gateway to STEM professional networking and opportunities.</p>
       <nav>
         <ul>

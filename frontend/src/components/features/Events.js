@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Events.css';
+import '../../styles/Events.css';
 
 function Events() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);

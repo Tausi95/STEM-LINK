@@ -1,7 +1,7 @@
 // src/components/HamburgerMenu.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './HamburgerMenu.css';
+import '../../styles/HamburgerMenu.css';
 
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Mentorship.css';
+import '../../styles/Mentorship.css';
 
 const fieldsOfInterest = [
   'Mathematics',
