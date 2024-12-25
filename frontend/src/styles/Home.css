@@ -1,0 +1,118 @@
+/* Header Section - Main container */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f7f7f7;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header-left .social-links a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.header-right {
+  margin-bottom: 20px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  width: 120px; /* Adjust logo size */
+  margin-right: 10px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem; /* Adjust header size */
+  margin-top: 20px;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Search Bar - Centering and adjustment */
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #1e73be;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Adjust CTA Buttons Layout */
+.cta-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cta-btn {
+  padding: 15px 30px;
+  background-color: #1e73be;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cta-btn:hover {
+  background-color: #145a8e;
+}
+
+/* Reduce unnecessary padding/margins */
+.highlights-section {
+  background-color: #f1f1f1;
+  padding: 40px 20px;
+  margin-bottom: 50px;
+}
+
+.highlights {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.highlight {
+  width: 250px;
+  text-align: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

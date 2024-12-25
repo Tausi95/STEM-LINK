@@ -1,0 +1,11 @@
+/* src/components/About.css */
+.about {
+  padding: 50px;
+}
+.about ul {
+  list-style: none;
+  padding: 0;
+}
+.about ul li {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,40 @@
+/* Sidebar.css */
+.sidebar {
+  position: fixed;
+  left: 10px;
+  top: 100px; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.icon {
+  font-size: 24px; /* Icon size */
+  color: #e1daed; /* Default icon color */
+  transition: color 0.3s;
+}
+
+/* Add individual colors for each platform */
+.icon.youtube:hover {
+  color: #FF0000; /* YouTube Red */
+}
+
+.icon.instagram:hover {
+  color: #E4405F; /* Instagram Pink */
+}
+
+.icon.twitter:hover {
+  color: #1DA1F2; /* Twitter Blue */
+}
+
+.icon.linkedin:hover {
+  color: #0077B5; /* LinkedIn Blue */
+}
+
+.icon.whatsapp:hover {
+  color: #25D366; /* WhatsApp Green */
+}
+
+.icon.github:hover {
+  color: #333; /* GitHub Dark */
+}

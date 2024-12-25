@@ -1,0 +1,17 @@
+/* src/pages/SubjectDetail.css */
+.subject-detail-container {
+  padding: 20px;
+}
+
+.subject-info h2 {
+  margin-top: 20px;
+}
+
+.subject-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.subject-info li {
+  margin: 5px 0;
+}
