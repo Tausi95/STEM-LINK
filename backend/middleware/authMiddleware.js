@@ -1,22 +1,31 @@
-// server.js
-const express = require('express'); // Import Express
-const dotenv = require('dotenv'); // Import dotenv for environment variables
-const connectDB = require('./config/db'); // Import the database connection function
-const userRoutes = require('./routes/userRoutes'); // Import user routes
-const { notFound, errorHandler } = require('./middleware/errorMiddleware'); // Import error handling middleware
+const jwt = require('jsonwebtoken'); // Import JWT for token verification
 
-dotenv.config(); // Load environment variables from .env file
-connectDB(); // Connect to MongoDB
+// Middleware to protect routes and validate JWT token
+const protect = (req, res, next) => {
+  let token;
 
-const app = express(); // Initialize Express app
-app.use(express.json()); // Middleware to parse JSON bodies
+  // Check if the token is provided in the Authorization header
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      // Get the token from the Authorization header (e.g., "Bearer token")
+      token = req.headers.authorization.split(' ')[1];
 
-// Define routes
-app.use('/api/users', userRoutes); // Routes for user-related actions
+      // Verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-// Error handling middleware
-app.use(notFound); // Handle 404 errors
-app.use(errorHandler); // General error handler
+      // Attach the user information to the request object (this is where user info will be available for use in the route handlers)
+      req.user = { id: decoded.id, email: decoded.email };
 
-const PORT = process.env.PORT || 5000; // Set the server port
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Start the server
+      next(); // Move to the next middleware/route handler
+    } catch (error) {
+      res.status(401).json({ message: 'Not authorized, token failed' }); // Token verification failed
+    }
+  }
+
+  // If token is not provided in the Authorization header
+  if (!token) {
+    res.status(401).json({ message: 'Not authorized, no token' });
+  }
+};
+
+module.exports = { protect };

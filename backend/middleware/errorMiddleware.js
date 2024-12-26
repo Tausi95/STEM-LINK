@@ -1,4 +1,3 @@
-// errorMiddleware.js
 // Middleware to handle 404 errors
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
@@ -10,6 +9,12 @@ const notFound = (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode; // Set status code
   res.status(statusCode);
+
+  // Log the error stack in development
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(err.stack); // Log the stack trace for debugging purposes
+  }
+
   res.json({
     message: err.message, // Send error message
     stack: process.env.NODE_ENV === 'production' ? null : err.stack, // Include stack trace if not in production
