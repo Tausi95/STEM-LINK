@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link component from react-router-dom
 import './Sidebar.js';
-import './logo.JPG';
-import './Header.css';
+import '../../assets/Images/logo.JPG';
+import '../../styles/Header.css';
 
 const Header = () => {
   return (

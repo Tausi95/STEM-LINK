@@ -11,7 +11,7 @@ import Network from './components/features/Network';
 import Events from './components/features/Events';
 import Features from './components/pages/Features';
 import Mentorship from './components/features/Mentorship';
-import Blogs from './components/featuresBlogs';
+import Blogs from './components/features/featuresBlogs';
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Calculator from './components/features/Calculator';

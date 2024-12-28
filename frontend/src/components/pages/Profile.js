@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateProfile } from './profileUpdate'; // Import the updateProfile function
-import './Profile.css';
+import '../../styles/Profile.css';
 import axios from 'axios';
 
 function Profile() {

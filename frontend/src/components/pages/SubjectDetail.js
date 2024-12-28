@@ -1,7 +1,7 @@
 // src/pages/SubjectDetail.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './SubjectDetail.css';
+import '../../styles/SubjectDetail.css';
 
 const SubjectDetail = () => {
   const { grade, stream, subject } = useParams();
