@@ -1,119 +1,153 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import eventService from '../../services/eventService'; // Import event service
 import '../../styles/Events.css';
 
 function Events() {
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [activeEventTab, setActiveEventTab] = useState(0);
+  const [activeProjectTab, setActiveProjectTab] = useState(0);
+  const [liveWebinars, setLiveWebinars] = useState([]);
+  const [scheduledEvents, setScheduledEvents] = useState([]);
   const [externalEvents, setExternalEvents] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    // Fetch upcoming events
-    axios.get('http://localhost:5000/api/events/upcoming')
-      .then(response => {
-        setUpcomingEvents(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching upcoming events:', error);
-      });
+    // Fetch events and projects using eventService
+    eventService
+      .getLiveWebinars()
+      .then(setLiveWebinars)
+      .catch((err) => console.error('Error fetching live webinars:', err));
 
-    // Fetch external events
-    axios.get('http://localhost:5000/api/events/external')
-      .then(response => {
-        setExternalEvents(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching external events:', error);
-      });
+    eventService
+      .getScheduledEvents()
+      .then(setScheduledEvents)
+      .catch((err) => console.error('Error fetching scheduled events:', err));
+ 
+    eventService
+      .getScheduledEvents()  // function update and is correctly imported
+      .then(setScheduledEvents)
+      .catch((err) => console.error('Error fetching scheduled events:', err));
+    
+    eventService
+      .getExternalEvents()
+      .then(setExternalEvents)
+      .catch((err) => console.error('Error fetching external events:', err));
+
+    eventService
+      .getProjects()
+      .then(setProjects)
+      .catch((err) => console.error('Error fetching projects:', err));
   }, []);
 
-  const handleAttendEvent = (eventId) => {
-    axios.post(`http://localhost:5000/api/events/attend/${eventId}`)
-      .then(response => {
-        alert('Successfully registered for the event!');
-        // Optionally update the state to reflect the change
-      })
-      .catch(error => {
-        console.error('Error registering for event:', error);
-      });
-  };
-
-  const handleSubscribeWebinars = () => {
-    axios.post('http://localhost:5000/api/webinars/subscribe')
-      .then(response => {
-        alert('Subscribed to webinars successfully!');
-      })
-      .catch(error => {
-        console.error('Error subscribing to webinars:', error);
-      });
-  };
-
-  const handleShowcaseProject = () => {
-    // Implement project showcasing logic
-    alert('Feature not yet implemented.');
+  const handleTabClick = (setActiveTab) => (index) => {
+    setActiveTab(index);
   };
 
   return (
     <div className="events-container">
       <h1>Events</h1>
-      <p>Discover upcoming STEM events. Participate in live webinars, attend expos, and showcase your projects!</p>
+      <p>Discover STEM events and showcase innovative projects!</p>
 
-      <section className="upcoming-events">
-        <h2>Upcoming Events</h2>
-        <ul className="event-list">
-          {upcomingEvents.map(event => (
-            <li key={event.id} className="event-item">
-              <h3>{event.title}</h3>
-              <p>{event.date}</p>
-              <p>{event.description}</p>
-              <button
-                className="attend-btn"
-                onClick={() => handleAttendEvent(event.id)}
-              >
-                Attend
-              </button>
-            </li>
-          ))}
-        </ul>
+      {/* Event Tabs */}
+      <section className="events-tabs">
+        <h2>Events</h2>
+        <div className="tabs">
+          <button
+            className={`tab ${activeEventTab === 0 ? 'active' : ''}`}
+            onClick={() => handleTabClick(setActiveEventTab)(0)}
+          >
+            Live Webinars
+          </button>
+          <button
+            className={`tab ${activeEventTab === 1 ? 'active' : ''}`}
+            onClick={() => handleTabClick(setActiveEventTab)(1)}
+          >
+            Scheduled Events
+          </button>
+          <button
+            className={`tab ${activeEventTab === 2 ? 'active' : ''}`}
+            onClick={() => handleTabClick(setActiveEventTab)(2)}
+          >
+            External Events
+          </button>
+        </div>
+        <div className="tab-content">
+          {activeEventTab === 0 && (
+            <ul className="event-list">
+              {liveWebinars.map((event) => (
+                <li key={event.id} className="event-item">
+                  <h3>{event.title}</h3>
+                  <p>{event.date}</p>
+                  <p>{event.description}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          {activeEventTab === 1 && (
+            <ul className="event-list">
+              {scheduledEvents.map((event) => (
+                <li key={event.id} className="event-item">
+                  <h3>{event.title}</h3>
+                  <p>{event.date}</p>
+                  <p>{event.description}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          {activeEventTab === 2 && (
+            <ul className="event-list">
+              {externalEvents.map((event) => (
+                <li key={event.id} className="event-item">
+                  <h3>{event.title}</h3>
+                  <p>{event.date}</p>
+                  <p>{event.description}</p>
+                  <button
+                    className="redirect-btn"
+                    onClick={() => window.open(event.url, '_blank')}
+                  >
+                    Go to Event
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
 
-      <section className="live-webinars">
-        <h2>Live Webinars & Scheduled Events</h2>
-        <p>Subscribe to live events and participate in scheduled webinars.</p>
-        <button className="subscribe-btn" onClick={handleSubscribeWebinars}>
-          Subscribe to Webinars
-        </button>
-      </section>
-
-      <section className="innovation-showcase">
+      {/* Project Tabs */}
+      <section className="projects-tabs">
         <h2>Innovation Showcase</h2>
-        <p>Explore projects showcased by mentors and students.</p>
-        <ul className="showcase-list">
-          <li>AI-driven medical diagnosis tool by Dr. Sarah Lee</li>
-          <li>Renewable energy solutions for rural areas by John Doe</li>
-        </ul>
-        <button className="showcase-btn" onClick={handleShowcaseProject}>
-          Showcase Your Project
-        </button>
-      </section>
-
-      <section className="external-events">
-        <h2>External Events</h2>
-        <p>Discover more STEM events from external platforms.</p>
-        <ul className="event-list">
-          {externalEvents.map(event => (
-            <li key={event.id} className="event-item">
-              <h3>{event.title}</h3>
-              <p>{event.date}</p>
-              <p>{event.description}</p>
-              <button
-                className="attend-btn"
-                onClick={() => handleAttendEvent(event.id)}
-              >
-                Attend
-              </button>
-            </li>
+        <div className="tabs">
+          {projects.map((_, index) => (
+            <button
+              key={index}
+              className={`tab ${activeProjectTab === index ? 'active' : ''}`}
+              onClick={() => handleTabClick(setActiveProjectTab)(index)}
+            >
+              Panel {index + 1}
+            </button>
           ))}
-        </ul>
+        </div>
+        <div className="tab-content">
+          <ul className="showcase-list">
+            {projects
+              .slice(activeProjectTab * 5, (activeProjectTab + 1) * 5)
+              .map((project) => (
+                <li key={project.id} className="project-item">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <p>Status: {project.status}</p>
+                  {project.externalLink && (
+                    <button
+                      className="redirect-btn"
+                      onClick={() => window.open(project.externalLink, '_blank')}
+                    >
+                      Learn More
+                    </button>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
       </section>
     </div>
   );
