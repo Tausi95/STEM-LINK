@@ -1,58 +1,114 @@
-/* Events.css */
+/* General Styles */
 .events-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  color: #333;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
-  color: #2c3e50;
-}
-
-h2 {
-  color: #2980b9;
   margin-bottom: 10px;
 }
 
 p {
-  color: #7f8c8d;
   text-align: center;
+  font-size: 1.1rem;
   margin-bottom: 20px;
 }
 
-.event-list {
+/* Tabs Section */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: #555;
+  font-size: 1rem;
+  margin: 0 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.tab:hover,
+.tab.active {
+  color: #007BFF;
+  border-bottom: 2px solid #007BFF;
+}
+
+.tab-content {
+  margin-top: 20px;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Event and Project Lists */
+.event-list, .showcase-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.event-item {
-  background-color: #fff;
-  padding: 15px;
+.event-item, .project-item {
   margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.event-item h3 {
-  margin: 0 0 5px 0;
-  color: #34495e;
-}
-
-.attend-btn, .subscribe-btn, .showcase-btn {
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: white;
-  border: none;
+  padding: 15px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
 }
 
-.attend-btn:hover, .subscribe-btn:hover, .showcase-btn:hover {
-  background-color: #2980b9;
+.event-item:hover, .project-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.attend-btn, .subscribe-btn, .redirect-btn {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007BFF;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.attend-btn:hover,
+.subscribe-btn:hover,
+.redirect-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Active Project and Event Tabs */
+.redirect-btn {
+  margin-top: 5px;
+  padding: 6px 12px;
+  background-color: #28a745;
+}
+
+.redirect-btn:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tab {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+
+  .event-item, .project-item {
+    padding: 10px;
+  }
 }
 
