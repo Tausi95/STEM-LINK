@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/Features.css';
+import './SubjectDetail';
 
 const Features = () => {
   // Data structure for grades, streams, and subjects

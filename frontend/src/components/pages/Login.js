@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import userService from '../../services/userService';
 import '../../styles/Login.css';
 
 const Login = () => {
@@ -8,25 +9,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Login successful');
-        localStorage.setItem('token', data.token); // Save JWT token
-        // Redirect to dashboard or update UI
-      } else {
-        alert(data.message);
-      }
+      const data = await userService.login(email, password);
+      alert('Login successful');
+      localStorage.setItem('token', data.token); // Save JWT token
+      // Redirect to dashboard or update UI
     } catch (error) {
-      alert('An error occurred. Please try again.');
+      alert(error.message || 'An error occurred. Please try again.');
     }
   };
 
@@ -55,7 +44,7 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <Link to="/signup">SignUp</Link>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );

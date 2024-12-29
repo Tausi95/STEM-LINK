@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import userService from '../../services/userService';
 import '../../styles/SignUp.css';
 
 const SignUp = () => {
@@ -9,26 +10,13 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email);
-  const validatePassword = (password) => password.length >= 8 && /\d/.test(password);
-
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateEmail(email)) {
-      setError('Invalid email format.');
-      return;
-    }
-
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setError('Password must be at least 8 characters long and contain a number.');
       return;
     }
 
@@ -36,24 +24,13 @@ const SignUp = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Sign-up successful!');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-      } else {
-        setError(data.message);
-      }
+      await userService.signUp(email, password);
+      alert('Sign-up successful!');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
     } catch (error) {
-      setError('Something went wrong. Please try again.');
+      setError(error.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
