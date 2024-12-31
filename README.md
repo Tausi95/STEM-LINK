@@ -1,8 +1,8 @@
 ---
 
-# STEMProlinks
+# STEMLINK
 
-STEMProlinks is an innovative web application designed to foster connections among professionals, students, and enthusiasts in STEM (Science, Technology, Engineering, and Mathematics) fields. Built using React, it enables users to network, collaborate, share resources, and participate in STEM-related events.
+STEMLINK is an innovative web application designed to foster connections among professionals, students, and enthusiasts in STEM (Science, Technology, Engineering, and Mathematics) fields. Built using React, it enables users to network, collaborate, share resources, and participate in STEM-related events.
 
 ## Table of Contents
 
@@ -62,8 +62,8 @@ Before proceeding, ensure you have the following installed:
 To clone the repository, run the following command:
 
 ```bash
-git clone https://github.com/Tausi95/STEMProlinks.git
-cd STEMProlinks
+git clone https://github.com/Tausi95/STEM-LINK.git
+cd STEM-LINK
 ```
 
 ### Backend Configuration
@@ -72,7 +72,7 @@ cd STEMProlinks
    - Create a `.env` file at the root of the project and add your MySQL database credentials as follows:
 
    ```bash
-   DB_NAME=stemprolinks_db
+   DB_NAME=STEMLINK_db
    DB_USER=root
    DB_PASS=yourpassword
    DB_HOST=localhost
