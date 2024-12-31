@@ -21,12 +21,12 @@ function Home() {
         <div className="header-right">
           {/* Logo with Link */}
           <Link to="/" className="logo-link">
-            <img src="./logo.png" alt="ASSET-Hub Logo" className="logo-img" />
-            <span>ASSET-Hub</span>
+            <img src="./logo.png" alt="STEM-LINK" className="logo-img" />
+            <span>STEM-LINK</span>
           </Link>
         </div>
 
-        <h1>Welcome to ASSET-Hub</h1>
+        <h1>Welcome to STEM-LINK</h1>
         <p>Your gateway to connecting with STEM professionals, educators, and students.</p>
 
         {/* Search Bar */}
@@ -41,7 +41,7 @@ function Home() {
       </header>
 
       <section className="cta-section">
-        <h2>Explore STEMProlinks</h2>
+        <h2>Explore STEM-LINK</h2>
         <div className="cta-buttons">
           <button className="cta-btn" onClick={() => window.location.href = "/mentorship"}>Find a Mentor</button>
           <button className="cta-btn" onClick={() => window.location.href = "/events"}>Discover Events</button>

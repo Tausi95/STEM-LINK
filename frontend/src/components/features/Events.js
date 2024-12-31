@@ -26,7 +26,7 @@ function Events() {
       .getScheduledEvents()  // function update and is correctly imported
       .then(setScheduledEvents)
       .catch((err) => console.error('Error fetching scheduled events:', err));
-    
+
     eventService
       .getExternalEvents()
       .then(setExternalEvents)

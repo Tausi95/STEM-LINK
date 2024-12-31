@@ -13,7 +13,7 @@ const userService = {
 
   signUp: async (email, password) => {
     try {
-      const response = await API.post('/signup', { email, password });
+      const response = await API.post('/register', { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');

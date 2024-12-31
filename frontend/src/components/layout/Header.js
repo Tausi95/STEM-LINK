@@ -10,7 +10,7 @@ const Header = () => {
       <div className="logo">
         {/* Make the logo clickable using the Link component */}
         <Link to="/" className="logo-link">
-          <img src="/logo.JPG" className="logo-img" alt="ASSET-Hub Logo" />
+          <img src="/logo.JPG" className="logo-img" alt=" STEM-LINK" />
         </Link>
       </div>
 

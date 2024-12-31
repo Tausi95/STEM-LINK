@@ -16,6 +16,7 @@ import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Calculator from './components/features/Calculator';
 import Design from './components/features/Design';
+import axiosConfig from './services/axiosConfig';
 
 import SubjectDetail from './components/pages/SubjectDetail';
 
