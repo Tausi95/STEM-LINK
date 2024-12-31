@@ -1,42 +1,51 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const { connectDB } = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const mentorRoutes = require('./routes/mentorRoutes');
 const eventRoutes = require('./routes/eventRoutes');
-const networkRoutes = require('./routes/networkRoutes');
-const authRoutes = require('./routes/authRoutes');
+const networkRoutes = require('./routes/networkRoutes'); // Uncommented this line
+const cors = require('cors'); // Added CORS for cross-origin requests
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
-dotenv.config(); // Load environment variables
+// Load environment variables
+dotenv.config();
 
-connectDB(); // Connect to the database
+// Connect to the database
+connectDB();
 
 const app = express();
+
+// Enable CORS
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Adjust the origin as needed
+    credentials: true, // Allows cookies and other credentials
+  })
+);
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Health check route to test API status
+// Health check route
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ message: "API is running properly." });
+  res.status(200).json({ message: 'API is running properly.' });
 });
 
-// Define routes for user, profile, mentorship, events, network, and auth
-app.use('/api/users', userRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/mentorship', mentorRoutes);
-app.use('/api/events', eventRoutes);
-app.use('/api/network', networkRoutes);
+// Define RESTful routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/mentor', mentorRoutes);
+app.use('/api/event', eventRoutes);
+app.use('/api/network', networkRoutes); // Uncommented this line
 
 // Error handling middleware
-app.use(notFound); // 404 error handling
-app.use(errorHandler); // General error handler
+app.use(notFound);
+app.use(errorHandler);
 
 // Start the server
-const PORT = process.env.PORT || 5000; // Set the server port
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`); // Log server status
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

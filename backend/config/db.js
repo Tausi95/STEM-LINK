@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env at the very top
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
 // Validate required environment variables
@@ -9,14 +9,14 @@ if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASS || !pro
 
 // Initialize Sequelize instance
 const sequelize = new Sequelize(
-  process.env.DB_NAME, // Database name
-  process.env.DB_USER, // Username
-  process.env.DB_PASS, // Password
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
   {
-    host: process.env.DB_HOST, // Hostname
-    port: process.env.DB_PORT || 3306, // Default to 3306 for MySQL
-    dialect: process.env.DB_DIALECT || 'mysql', // Dialect, default to MySQL
-    logging: false, // Disable SQL query logging
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 3306,
+    dialect: process.env.DB_DIALECT || 'mysql',
+    logging: false,
   }
 );
 
@@ -27,20 +27,19 @@ const connectDB = async () => {
     console.log('MySQL Database connected successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error.message);
-    process.exit(1); // Exit with failure code
+    process.exit(1);
   }
 };
 
 // Optionally sync models (for development only)
 const syncModels = async () => {
   try {
-    await sequelize.sync({ force: false }); // 'force: true' drops existing tables
+    await sequelize.sync({ force: false });
     console.log('Models synchronized with the database.');
   } catch (error) {
     console.error('Error synchronizing models:', error.message);
   }
 };
 
-// Export the Sequelize instance and utility functions
 module.exports = { connectDB, syncModels, sequelize };
 

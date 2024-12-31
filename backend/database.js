@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/stemprolinks_database', {
+mongoose.connect('mongodb://localhost/stem-link_database', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

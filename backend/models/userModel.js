@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
       // A user can attend multiple events (many-to-many relationship)
       User.belongsToMany(models.Event, {
-        through: 'UserEvents', // Join table
+        through: 'UserEvents',
         foreignKey: 'userId',
         otherKey: 'eventId',
         as: 'eventsAttended',
@@ -33,15 +33,15 @@ module.exports = (sequelize, DataTypes) => {
 
       // Self-referencing many-to-many relationship for mentorships
       User.belongsToMany(models.User, {
-        through: 'Mentorships', // Join table
-        as: 'mentors', // Mentors of this user
+        through: 'Mentorships',
+        as: 'mentors',
         foreignKey: 'studentId',
         otherKey: 'mentorId',
       });
 
       User.belongsToMany(models.User, {
-        through: 'Mentorships', // Join table
-        as: 'students', // Students of this user
+        through: 'Mentorships',
+        as: 'students',
         foreignKey: 'mentorId',
         otherKey: 'studentId',
       });
@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          len: [3, 25], // Length between 3 and 25 characters
+          len: [3, 25],
         },
       },
       email: {
@@ -68,14 +68,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true, //  valid email format
+          isEmail: true,
         },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          len: [8, 100], // Length between 8 and 100 characters
+          len: [6, 100],
         },
       },
       role: {

@@ -9,7 +9,7 @@ const validateProfileData = (data) => {
   // Optionally, add more validation, like checking if email is in valid format
 };
 
-const getProfilesWithConnections = async (req, res) => {
+const getProfilesWithConnections = async () => {
   try {
     const profiles = await Profile.findAll({
       include: [
@@ -20,13 +20,10 @@ const getProfilesWithConnections = async (req, res) => {
         }
       ]
     });
-    if (!profiles || profiles.length === 0) {
-      return res.status(404).json({ message: 'No profiles found.' });
-    }
-    res.status(200).json(profiles);
+    return profiles;
   } catch (error) {
     console.error('Error fetching profiles with connections:', error); // Log error for debugging
-    res.status(500).json({ message: 'An error occurred while fetching profiles.', error: error.message });
+    throw new Error('An error occurred while fetching profiles: ' + error.message);
   }
 };
 
@@ -46,13 +43,13 @@ const updateProfile = async (req, res) => {
       return res.status(404).json({ message: 'Profile not found or no changes detected' });
     }
 
-    res.status(200).json({ message: 'Profile updated successfully' });
+    return { message: 'Profile updated successfully' };
   } catch (error) {
     console.error('Error updating profile:', error); // Log error for debugging
     if (error.message) {
-      return res.status(400).json({ message: error.message }); // Handle validation errors
+      throw new Error(error.message); // Handle validation errors
     }
-    res.status(500).json({ message: 'An error occurred while updating the profile.', error: error.message });
+    throw new Error('An error occurred while updating the profile: ' + error.message);
   }
 };
 
