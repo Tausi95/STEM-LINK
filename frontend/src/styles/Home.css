@@ -1,13 +1,14 @@
-/* Header Section - Main container */
+* Updated Home.css */
+
 .hero-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 20px 10px; /* Reduced padding */
   background-color: #f7f7f7;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px; /* Reduced margin */
 }
 
 .header-left .social-links a {
@@ -42,7 +43,6 @@
   margin-bottom: 20px;
 }
 
-/* Search Bar - Centering and adjustment */
 .search-form {
   display: flex;
   justify-content: center;
@@ -70,7 +70,6 @@
   cursor: pointer;
 }
 
-/* Adjust CTA Buttons Layout */
 .cta-section {
   text-align: center;
   margin: 40px 0;
@@ -95,11 +94,10 @@
   background-color: #145a8e;
 }
 
-/* Reduce unnecessary padding/margins */
 .highlights-section {
   background-color: #f1f1f1;
-  padding: 40px 20px;
-  margin-bottom: 50px;
+  padding: 20px 10px; /* Reduced padding */
+  margin-bottom: 30px; /* Reduced margin */
 }
 
 .highlights {

@@ -4,7 +4,7 @@ import API from './axiosConfig';
 const userService = {
   login: async (email, password) => {
     try {
-      const response = await API.post('/login', { email, password });
+      const response = await API.post('/user/login', { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Login failed.');
@@ -13,7 +13,7 @@ const userService = {
 
   signUp: async (email, password) => {
     try {
-      const response = await API.post('/register', { email, password });
+      const response = await API.post('/user/register', { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');

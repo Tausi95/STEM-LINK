@@ -2,9 +2,9 @@
 .profile-container {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  min-height: 60vh;
   background-color: #f4f7fa;
-  padding: 20px;
+  padding-top:60px;
 }
 
 .profile-sidebar {
@@ -15,7 +15,7 @@
   box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 80vh;
 }
 
 .profile-sidebar h2 {
@@ -158,4 +158,3 @@
     margin-left: 0;
   }
 }
-

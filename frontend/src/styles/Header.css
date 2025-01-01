@@ -1,15 +1,17 @@
-/* src/components/Header.css */
+
+/* Updated Header.css */
+
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Increased padding */
   background-color: #333;
   color: white;
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000; /* Ensures the header stays on top */
+  z-index: 1000;
 }
 
 .logo {
@@ -50,9 +52,11 @@
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 10px;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap; /* Allows wrapping */
+  justify-content: flex-end; /* Align links to the right */
 }
 
 .nav-links li {
@@ -69,7 +73,6 @@
   color: #1e73be;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .navbar {
     display: none; /* Hide the navbar on small screens */
@@ -77,5 +80,10 @@
 
   .search-bar {
     width: 80%;
+  }
+
+  .nav-links {
+    flex-direction: column; /* Stack links vertically */
+    align-items: flex-start;
   }
 }
