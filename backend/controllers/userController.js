@@ -1,7 +1,7 @@
 // Fixed userController.js
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
-const User = require('../models/userModel');
+const { User } = require('../models/');
 const generateToken = require('../utils/generateToken');
 
 // Register a new user
