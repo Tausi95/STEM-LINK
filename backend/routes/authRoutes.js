@@ -21,7 +21,7 @@ router.post(
   '/register',
   [
     // Validate input fields
-    body('name').notEmpty().withMessage('Name is required'),
+    body('username').notEmpty().withMessage('Username is required'),
     body('email').isEmail().withMessage('Valid email is required'),
     body('password')
       .isLength({ min: 6 })
