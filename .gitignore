@@ -51,5 +51,12 @@ m4/lt~obsolete.m4
 # (which is called by configure script))
 Makefile
 
-*/node_modules
-*/.env
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment variables
+.env
+backend/.env
+frontend/.env
