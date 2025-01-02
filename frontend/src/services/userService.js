@@ -1,10 +1,16 @@
-// userService.js
 import API from './axiosConfig';
+
+const ENDPOINTS = {
+  LOGIN: '/user/login',
+  REGISTER: '/user/register',
+  PROFILE: '/users/profile',
+  UPLOAD: '/users/profile/upload',
+};
 
 const userService = {
   login: async (email, password) => {
     try {
-      const response = await API.post('/user/login', { email, password });
+      const response = await API.post(ENDPOINTS.LOGIN, { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Login failed.');
@@ -13,7 +19,7 @@ const userService = {
 
   signUp: async (email, password) => {
     try {
-      const response = await API.post('/user/register', { email, password });
+      const response = await API.post(ENDPOINTS.REGISTER, { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');
@@ -22,7 +28,7 @@ const userService = {
 
   getUserProfile: async () => {
     try {
-      const response = await API.get('/users/profile');
+      const response = await API.get(ENDPOINTS.PROFILE);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to fetch profile.');
@@ -31,7 +37,7 @@ const userService = {
 
   updateUserProfile: async (profileData) => {
     try {
-      const response = await API.put('/users/profile', profileData);
+      const response = await API.put(ENDPOINTS.PROFILE, profileData);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to update profile.');
@@ -40,7 +46,7 @@ const userService = {
 
   uploadProfilePicture: async (fileData) => {
     try {
-      const response = await API.post('/users/profile/upload', fileData, {
+      const response = await API.post(ENDPOINTS.UPLOAD, fileData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
@@ -51,4 +57,3 @@ const userService = {
 };
 
 export default userService;
-

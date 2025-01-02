@@ -45,7 +45,6 @@ function Footer() {
           <ul>
             <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /> Twitter</a></li>
             <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /> Facebook</a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a></li>
             <li><a href="https://wa.me" target="_blank" rel="noopener noreferrer"><FaWhatsapp /> WhatsApp</a></li>
             <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer"><FaDiscord /> Discord</a></li>
           </ul>

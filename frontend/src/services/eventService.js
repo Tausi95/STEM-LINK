@@ -1,147 +1,53 @@
 import API from './axiosConfig';
 
-// Fetch all events or filter by type
-export const fetchEvents = async (type = '') => {
+const handleRequest = async (callback) => {
   try {
-    const response = await API.get(`/events${type ? `?type=${type}` : ''}`);
-    return response.data;
+    return await callback();
   } catch (error) {
-    console.error(`Error fetching ${type || 'all'} events:`, error);
+    console.error('API Error:', error.message);
     throw error;
   }
 };
 
-// Fetch live webinars specifically
-export const getLiveWebinars = async () => {
-  try {
-    // Assuming 'webinar' is the type used for live webinars in your API
-    const response = await fetchEvents('webinar');
-    return response;
-  } catch (error) {
-    console.error('Error fetching live webinars:', error);
-    throw error;
-  }
-};
+export const fetchEvents = (type = '') => 
+  handleRequest(() => API.get(`/events${type ? `?type=${type}` : ''}`));
 
+export const getLiveWebinars = () => fetchEvents('webinar');
 
-export const getScheduledEvents = async () => {
-  try {
-    const response = await API.get('/events/scheduled');  //  endpoint,
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching scheduled events:', error);
-    throw error;
-  }
-};
+export const getScheduledEvents = () => 
+  handleRequest(() => API.get('/events/scheduled'));
 
-// Fetch a single event by its ID
-export const fetchEventById = async (id) => {
-  try {
-    const response = await API.get(`/events/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching event with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const fetchEventById = (id) => 
+  handleRequest(() => API.get(`/events/${id}`));
 
-// Create a new event
-export const createEvent = async (eventData) => {
-  try {
-    const response = await API.post('/events', eventData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating event:', error);
-    throw error;
-  }
-};
+export const createEvent = (eventData) => 
+  handleRequest(() => API.post('/events', eventData));
 
-// Update an existing event
-export const updateEvent = async (id, updatedData) => {
-  try {
-    const response = await API.put(`/events/${id}`, updatedData);
-    return response.data;
-  } catch (error) {
-    console.error(`Error updating event with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const updateEvent = (id, updatedData) => 
+  handleRequest(() => API.put(`/events/${id}`, updatedData));
 
-// Delete an event
-export const deleteEvent = async (id) => {
-  try {
-    const response = await API.delete(`/events/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error deleting event with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const deleteEvent = (id) => 
+  handleRequest(() => API.delete(`/events/${id}`));
 
-// Additional helper for attending an event
-export const attendEvent = async (id) => {
-  try {
-    const response = await API.post(`/events/attend/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error attending event with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const attendEvent = (id) => 
+  handleRequest(() => API.post(`/events/attend/${id}`));
 
-// Additional helper for subscribing to webinars
-export const subscribeToWebinars = async () => {
-  try {
-    const response = await API.post('/webinars/subscribe');
-    return response.data;
-  } catch (error) {
-    console.error('Error subscribing to webinars:', error);
-    throw error;
-  }
-};
+export const getExternalEvents = () => 
+  handleRequest(() => API.get('/events/external'));
 
-// Additional helper for fetching external events
-export const fetchExternalEvents = async () => {
-  try {
-    const response = await API.get('/events/external');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching external events:', error);
-    throw error;
-  }
-};
+export const getProjects = () => 
+  handleRequest(() => API.get('/events/projects'));
 
-//getting external events
-export const getExternalEvents = async () => {
-  try {
-    const response = await API.get('/events/external');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching external events:', error);
-    throw error;
-  }
-};
-
-export const getProjects = async () => {
-  try {
-    const response = await API.get('events/projects');
-    return response.data
-  } catch (error) {
-    console.error('error getting project:', error);
-    throw error;
-  }
-};
 export default {
   fetchEvents,
+  getLiveWebinars,
+  getScheduledEvents,
   fetchEventById,
   createEvent,
   updateEvent,
   deleteEvent,
   attendEvent,
-  subscribeToWebinars,
-  fetchExternalEvents,
-  getLiveWebinars,
-  getScheduledEvents,
   getExternalEvents,
   getProjects,
 };
+
