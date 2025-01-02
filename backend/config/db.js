@@ -1,13 +1,12 @@
+// Fixed db.js
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-// Validate required environment variables
 if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASS || !process.env.DB_HOST || !process.env.DB_DIALECT) {
   console.error('One or more required environment variables are missing. Please check your .env file.');
   process.exit(1);
 }
 
-// Initialize Sequelize instance
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -20,7 +19,6 @@ const sequelize = new Sequelize(
   }
 );
 
-// Function to connect to the database
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
@@ -31,10 +29,9 @@ const connectDB = async () => {
   }
 };
 
-// Optionally sync models (for development only)
 const syncModels = async () => {
   try {
-    await sequelize.sync({ force: false });
+    await sequelize.sync();
     console.log('Models synchronized with the database.');
   } catch (error) {
     console.error('Error synchronizing models:', error.message);
@@ -42,4 +39,3 @@ const syncModels = async () => {
 };
 
 module.exports = { connectDB, syncModels, sequelize };
-

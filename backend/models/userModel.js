@@ -1,44 +1,27 @@
+// Fixed userModel.js
 'use strict';
 const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
+const sequelize = require('../config/db');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // A user has one profile
-      User.hasOne(models.Profile, {
-        foreignKey: 'userId',
-        as: 'profile',
-      });
-
-      // A user can create multiple events
-      User.hasMany(models.Event, {
-        foreignKey: 'creatorId',
-        as: 'eventsCreated',
-      });
-
-      // A user can attend multiple events (many-to-many relationship)
+      User.hasOne(models.Profile, { foreignKey: 'userId', as: 'profile' });
+      User.hasMany(models.Event, { foreignKey: 'creatorId', as: 'eventsCreated' });
       User.belongsToMany(models.Event, {
         through: 'UserEvents',
         foreignKey: 'userId',
         otherKey: 'eventId',
         as: 'eventsAttended',
       });
-
-      // A user can manage multiple networks
-      User.hasMany(models.Network, {
-        foreignKey: 'ownerId',
-        as: 'networks',
-      });
-
-      // Self-referencing many-to-many relationship for mentorships
+      User.hasMany(models.Network, { foreignKey: 'ownerId', as: 'networks' });
       User.belongsToMany(models.User, {
         through: 'Mentorships',
         as: 'mentors',
         foreignKey: 'studentId',
         otherKey: 'mentorId',
       });
-
       User.belongsToMany(models.User, {
         through: 'Mentorships',
         as: 'students',
@@ -47,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    // Instance method to compare passwords
     async isValidPassword(password) {
       return bcrypt.compare(password, this.password);
     }
@@ -89,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
       hooks: {
         beforeSave: async (user) => {
-          if (user.password) {
+          if (user.changed('password')) {
             user.password = await bcrypt.hash(user.password, 10);
           }
         },

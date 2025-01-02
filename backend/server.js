@@ -6,8 +6,8 @@ const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const mentorRoutes = require('./routes/mentorRoutes');
 const eventRoutes = require('./routes/eventRoutes');
-const networkRoutes = require('./routes/networkRoutes'); // Uncommented this line
-const cors = require('cors'); // Added CORS for cross-origin requests
+const networkRoutes = require('./routes/networkRoutes');
+const cors = require('cors');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 // Load environment variables
@@ -22,7 +22,7 @@ const app = express();
 app.use(
   cors({
     origin: 'http://localhost:3000', // Adjust the origin as needed
-    credentials: true, // Allows cookies and other credentials
+    credentials: true,
   })
 );
 
@@ -36,11 +36,11 @@ app.get('/api/health', (req, res) => {
 
 // Define RESTful routes
 app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/users', userRoutes); // Combine all user-related routes here
 app.use('/api/profile', profileRoutes);
-app.use('/api/mentor', mentorRoutes);
-app.use('/api/event', eventRoutes);
-app.use('/api/network', networkRoutes); // Uncommented this line
+app.use('/api/mentors', mentorRoutes); // Adjusted for clarity
+app.use('/api/events', eventRoutes); // Removed `:id` from here
+app.use('/api/network', networkRoutes);
 
 // Error handling middleware
 app.use(notFound);

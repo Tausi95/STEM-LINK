@@ -1,3 +1,4 @@
+// Fixed userController.js
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
@@ -93,4 +94,3 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 module.exports = { registerUser, authUser, getUserProfile, updateUserProfile };
-
