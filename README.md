@@ -66,30 +66,28 @@ git clone https://github.com/Tausi95/STEM-LINK.git
 cd STEM-LINK
 ```
 
-### Backend Configuration
+### Backend Setup
 
-1. MySQL Database: Set up a MySQL database.
-   - Create a `.env` file at the root of the project and add your MySQL database credentials as follows:
+1. Navigate to backend directory
+```bash
+cd backend
+```
 
-   ```bash
-   DB_NAME=STEMLINK_db
-   DB_USER=root
-   DB_PASS=yourpassword
-   DB_HOST=localhost
-   DB_PORT=3306
-   ```
+1. Add configurations
+   - Rename `.env.example` to `.env` file at the root of the project
+   - MySQL database credentials to reflect your database setup
+   - Add JWT secret key  
 
 2. Install Backend Dependencies:
 
 ```bash
-cd backend
 npm install
 ```
 
 3. Run Migrations
 
 ```bash
-npx sequelize db:migrate
+npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed
 ```
 
 ### Frontend Configuration

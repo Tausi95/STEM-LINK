@@ -1,53 +1,60 @@
 // Fixed userController.js
 const asyncHandler = require('express-async-handler');
-const bcrypt = require('bcryptjs');
-const User = require('../models/userModel');
+const { User } = require('../models/');
 const generateToken = require('../utils/generateToken');
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  try {
+    const { username, email, password } = req.body;
+    const role = 'role' in req.body ? req.body.role : undefined;
+  
+    // Check if user already exists
+    const userExists = await User.findOne({ where: { email } });
+    
+    if (userExists) throw new Error('User already exists')
 
-  // Check if user already exists
-  const userExists = await User.findOne({ where: { email } });
+    // Create user and hash password automatically using model hook
+    const user = await User.create({ username, email, password, role });
+    if (!user) throw new Error('Failed to register user');
 
-  if (userExists) {
-    res.status(400);
-    throw new Error('User already exists');
-  }
-
-  // Create user and hash password automatically using model hook
-  const user = await User.create({ username, email, password });
-
-  if (user) {
     res.status(201).json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
+      user: user.toJSON(),
       token: generateToken(user.id),
     });
-  } else {
-    res.status(400);
-    throw new Error('Failed to register user');
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(400).json({
+      status: 'failure',
+      message: error.message || 'An error occurred while registering the user.',
+    });
   }
 });
 
-// Authenticate user and return token
+// Authenticate user and return authenticated user
 const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
+    const user = await User.scope('withPassword').findOne({ where: { email } });
+    if(!user || !(await user.isValidPassword(password))) {
+      throw new Error('Invalid email or password');
+    }
+    const { password: p, ...userWithoutPassword } = user.toJSON();
 
-  const user = await User.findOne({ where: { email } });
-
-  if (user && (await user.isValidPassword(password))) {
     res.status(200).json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user.id),
+      status: 'success',
+      message: 'Login successful',
+      data: {
+        user: userWithoutPassword,
+        token: generateToken(user.id),
+      },
     });
-  } else {
-    res.status(401);
-    throw new Error('Invalid email or password');
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(401).json({
+      status: 'failure',
+      message: error.message || 'Invalid credentials or login failed.',
+    });
   }
 });
 

@@ -52,3 +52,16 @@ m4/lt~obsolete.m4
 # can automatically generate from config.status script
 # (which is called by configure script))
 Makefile
+
+# Node modules
+node_modules/
+package-lock.json
+backend/node_modules/
+frontend/node_modules/
+backend/package-lock.json
+frontend/package-lock.json
+
+# Environment variables
+.env
+backend/.env
+frontend/.env
