@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { registerUser, loginUser } = require('../controllers/userController');
+const { registerUser, authUser } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -30,7 +30,7 @@ router.post(
   handleValidationErrors,
   async (req, res) => {
     try {
-      const user = await registerUser(req, res); // Assuming req.body contains { name, email, password, etc. }
+      const user = await registerUser(req, res);
       res.status(201).json({
         status: 'success',
         message: 'User registered successfully',
@@ -57,7 +57,7 @@ router.post(
   handleValidationErrors,
   async (req, res) => {
     try {
-      const user = await loginUser(req.body); // Assuming req.body contains { email, password }
+      const user = await authUser(req.body);
       res.status(200).json({
         status: 'success',
         message: 'Login successful',

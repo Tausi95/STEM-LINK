@@ -32,23 +32,16 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// Authenticate user and return token
-const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
+// Authenticate user and return authenticated user
+const authUser = asyncHandler(async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
-
-  if (user && (await user.isValidPassword(password))) {
-    res.status(200).json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user.id),
-    });
-  } else {
-    res.status(401);
+  if(!user || !(await user.isValidPassword(password))) {
     throw new Error('Invalid email or password');
   }
+  return {
+    ...user.toJSON(),
+    token: generateToken(user.id),
+  };
 });
 
 // Get user profile
