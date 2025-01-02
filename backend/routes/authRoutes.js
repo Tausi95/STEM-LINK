@@ -30,7 +30,7 @@ router.post(
   handleValidationErrors,
   async (req, res) => {
     try {
-      const user = await registerUser(req.body); // Assuming req.body contains { name, email, password, etc. }
+      const user = await registerUser(req, res); // Assuming req.body contains { name, email, password, etc. }
       res.status(201).json({
         status: 'success',
         message: 'User registered successfully',
