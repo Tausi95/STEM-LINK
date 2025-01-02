@@ -181,7 +181,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any inquiries or support, feel free to reach out:
 
-- Email: [tausipro@gmail.com](mailto:tausipro@gmail.com)
+- Email: [tausipro@stemlink.com](mailto:tausipro@stemlink.com)
 - GitHub: [Tausi95](https://github.com/Tausi95)
 
 ---
