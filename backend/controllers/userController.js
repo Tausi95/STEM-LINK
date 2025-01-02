@@ -35,18 +35,20 @@ const registerUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await User.scope('withPassword').findOne({ where: { email } });
     if(!user || !(await user.isValidPassword(password))) {
       throw new Error('Invalid email or password');
     }
+    const { password: p, ...userWithoutPassword } = user.toJSON();
+
     res.status(200).json({
       status: 'success',
       message: 'Login successful',
       data: {
-        user: user.toJSON(),
+        user: userWithoutPassword,
         token: generateToken(user.id),
       },
-    })
+    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(401).json({
