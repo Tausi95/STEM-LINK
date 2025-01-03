@@ -14,8 +14,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await userService.login(email, password);
-      console.log("Response Data:", data);
-      console.log("User:", data.user);
       sessionStorage.setItem('token', data.token);
       sessionStorage.setItem('user', JSON.stringify(data.user));
       setIsLoggedIn(true);
