@@ -1,8 +1,8 @@
 import API from './axiosConfig';
 
 const ENDPOINTS = {
-  LOGIN: '/user/login',
-  REGISTER: '/user/register',
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
   PROFILE: '/users/profile',
   UPLOAD: '/users/profile/upload',
 };
@@ -17,9 +17,14 @@ const userService = {
     }
   },
 
-  signUp: async (email, password) => {
+  signUp: async (username, email, password, role) => {
     try {
-      const response = await API.post(ENDPOINTS.REGISTER, { email, password });
+      const response = await API.post(ENDPOINTS.REGISTER, { 
+        email, 
+        password,
+        username,
+        role
+      });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');

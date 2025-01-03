@@ -2,6 +2,7 @@
 const asyncHandler = require('express-async-handler');
 const { User } = require('../models/');
 const generateToken = require('../utils/generateToken');
+const { Op } = require('sequelize');
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -10,17 +11,28 @@ const registerUser = asyncHandler(async (req, res) => {
     const role = 'role' in req.body ? req.body.role : undefined;
   
     // Check if user already exists
-    const userExists = await User.findOne({ where: { email } });
+    const userExists = await User.findOne({
+      where: {
+      [Op.or]: [
+        { email },
+        { username }
+      ]
+      }
+    });
     
     if (userExists) throw new Error('User already exists')
 
     // Create user and hash password automatically using model hook
     const user = await User.create({ username, email, password, role });
     if (!user) throw new Error('Failed to register user');
-
+    const { password: p, ...userWithoutPassword } = user.toJSON();
     res.status(201).json({
-      user: user.toJSON(),
-      token: generateToken(user.id),
+      status: 'success',
+      message: 'Login successful',
+      data: {
+        user: userWithoutPassword,
+        token: generateToken(user.id),
+      }
     });
   } catch (error) {
     console.error('Registration error:', error);
