@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userService from '../../services/userService';
+import { useAuth } from '../AuthContext';
 import '../../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setIsLoggedIn, setUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await userService.login(email, password);
-      alert('Login successful');
-      localStorage.setItem('token', data.token); // Save JWT token
-      // Redirect to dashboard or update UI
+      const { data } = await userService.login(email, password);
+      console.log("Response Data:", data);
+      console.log("User:", data.user);
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('user', JSON.stringify(data.user));
+      setIsLoggedIn(true);
+      setUser(data.user);
+      navigate('/');
     } catch (error) {
       alert(error.message || 'An error occurred. Please try again.');
     }

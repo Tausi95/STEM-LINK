@@ -1,8 +1,8 @@
 import API from './axiosConfig';
 
 const ENDPOINTS = {
-  LOGIN: '/user/login',
-  REGISTER: '/user/register',
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
   PROFILE: '/users/profile',
   UPLOAD: '/users/profile/upload',
 };
