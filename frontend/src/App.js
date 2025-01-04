@@ -16,7 +16,8 @@ import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Calculator from './components/features/Calculator';
 import Design from './components/features/Design';
-
+import StudentDashboard from './components/features/dashboard/StudentDashboard';
+import MentorDashboard from './components/features/dashboard/MentorDashboard';
 import SubjectDetail from './components/pages/SubjectDetail';
 import { AuthProvider } from './components/AuthContext';
 
@@ -35,6 +36,8 @@ function App() {
               <Route path="/network" element={<Network />} />
               <Route path="/events" element={<Events />} />
               <Route path="/mentorship" element={<Mentorship />} />
+	      <Route path="/studentdashboard" element={<StudentDashboard />} />
+	      <Route path="/mentordashboard" element={<MentorDashboard />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/sidebar" element={<Sidebar />} />
               <Route path="/home" element={<Home />} />

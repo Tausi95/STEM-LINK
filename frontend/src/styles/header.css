@@ -1,0 +1,139 @@
+
+/* Updated Header.css */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Increased padding */
+  background-color: #333;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  max-width: 200px;
+  max-height: 50px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  width: 120px; /* Adjust logo size */
+}
+
+.search-bar {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 1rem;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap; /* Allows wrapping */
+  justify-content: flex-end; /* Align links to the right */
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #1e73be;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  margin-right: 16px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-toggle::after {
+  content: ' \25BC'; /* Unicode for caret down */
+  margin-left: 8px;
+}
+
+.dropdown-toggle:hover {
+  background-color: #444;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+  left: auto;
+}
+
+.dropdown-menu li {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #575757;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none; /* Hide the navbar on small screens */
+  }
+
+  .search-bar {
+    width: 80%;
+  }
+
+  .nav-links {
+    flex-direction: column; /* Stack links vertically */
+    align-items: flex-start;
+  }
+}

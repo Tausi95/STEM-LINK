@@ -1,0 +1,57 @@
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.overview-section, .chart-section, .subject-section, .tutor-section, .discussion-section, .pending-tests-section, .calendar-section {
+  margin: 20px 0;
+}
+
+.card {
+  display: inline-block;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+  width: 30%;
+}
+
+.chart-section {
+  display: flex;
+  justify-content: space-around;
+}
+
+.chart-card {
+  width: 45%;
+  height: 300px;
+}
+
+.subject-section ul, .tutor-section ul, .discussion-section ul, .pending-tests-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.subject-section ul li, .tutor-section ul li, .discussion-section ul li, .pending-tests-section ul li {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #eef;
+  border-radius: 5px;
+}
+
+.calendar-section {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-section .react-calendar {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
