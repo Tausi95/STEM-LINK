@@ -21,6 +21,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'profileId',
         as: 'profile',
       });
+
+     // adding association to network model (if mentor is linked to network)
+     Mentor.belongsTo(models.Network, {
+       foreignKey: 'networkId',
+       as: 'network',
+     });
+
     }
   }
 

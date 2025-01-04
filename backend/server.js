@@ -7,6 +7,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const mentorRoutes = require('./routes/mentorRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const networkRoutes = require('./routes/networkRoutes');
+const dashboardRoutes = require('.routes/dashboardRoutes');
 const cors = require('cors');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -41,6 +42,7 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/mentors', mentorRoutes); // Adjusted for clarity
 app.use('/api/events', eventRoutes); // Removed `:id` from here
 app.use('/api/network', networkRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling middleware
 app.use(notFound);

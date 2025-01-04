@@ -43,4 +43,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return FileManager;
 };
-
