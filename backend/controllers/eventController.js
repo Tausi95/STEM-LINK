@@ -119,7 +119,7 @@ const attendEvent = async (req, res) => {
     event.attendees.push(req.body.userId); // Assuming user ID is sent in request body
 
     await event.save();
-    res.status(200).json({ message: `You have successfully registered for the event: ${event.name}` });
+    res.status(200).json({ message: `You have successfully registered for the event: ${event.title}` });
   } catch (error) {
     console.error('Error attending event:', error);
     res.status(500).json({ message: 'An error occurred while attending the event.' });
