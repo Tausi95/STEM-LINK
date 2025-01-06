@@ -14,12 +14,12 @@ const errorHandler = (err, req, res, next) => {
 
   // Log the error stack in development
   if (process.env.NODE_ENV !== 'production') {
-    console.error(err.stack); // Log the stack trace for debugging purposes
+    console.error(err.stack); // Log the stack trace for debugging
   }
 
   res.json({
     message: err.message, // Send error message
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack, // Include stack trace if not in production
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack, // to stack trace if not in production
   });
 };
 
