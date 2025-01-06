@@ -1,26 +1,37 @@
 // backend/middleware/validateEvent.js
 const { body, validationResult } = require('express-validator');
+const { handleValidationErrors } = require('./errorMiddleware');
 
-const handleValidationErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-  next();
+const eventTypes = ['workshop', 'seminar', 'webinar', 'conference'];
+
+const validateEventDate = (isRequired = true) => {
+  const validator = body('date').isISO8601().withMessage('Event date must be valid')
+    .custom((value) => {
+      if (new Date(value) < new Date()) {
+        throw new Error('Event date must be greater than or equal to today');
+      }
+      return true;
+    });
+  return isRequired ? validator.notEmpty().withMessage('Event date is required') : validator.optional();
+};
+
+const validateEventType = (isRequired = true) => {
+  const validator = body('type').isIn(eventTypes).withMessage(`Event type must be one of ${eventTypes.join(', ')}`);
+  return isRequired ? validator.notEmpty().withMessage('Event type is required') : validator.optional();
 };
 
 // Middleware to validate event data
-const validateEvent = [
+const createEventValidator = [
   body('title').notEmpty().withMessage('Event title is required'),
-  body('date').isISO8601().withMessage('Event date must be valid').custom((value) => {
-    if (new Date(value) < new Date()) {
-      throw new Error('Event date must be greater than or equal to today');
-    }
-    return true;
-  }),
-  body('type').notEmpty().withMessage("Event type is required")
-              .isIn(['workshop', 'seminar', 'webinar', 'conference']).withMessage("Event type must be one of 'workshop', 'seminar', 'webinar', 'conference'"),
+  validateEventDate(),
+  validateEventType(),
   handleValidationErrors,
 ];
 
-module.exports = { validateEvent, handleValidationErrors };
+const updateEventValidator = [
+  validateEventDate(false),
+  validateEventType(false),
+  handleValidationErrors,
+];
+
+module.exports = { createEventValidator, updateEventValidator };
