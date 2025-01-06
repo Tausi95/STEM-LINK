@@ -1,16 +1,5 @@
-const Event = require('../models/event');
+const { Event } = require('../models');
 const { Op } = require('sequelize'); // In case you want to handle specific queries, like date ranges
-
-// Helper function to validate event data
-const validateEventData = (eventData) => {
-  const { name, date, location } = eventData;
-  if (!name || !date || !location) {
-    throw new Error('Event name, date, and location are required.');
-  }
-  if (new Date(date) <= new Date()) {
-    throw new Error('Event date must be in the future.');
-  }
-};
 
 const getEvents = async (req, res) => {
   try {
@@ -43,9 +32,6 @@ const createEvent = async (req, res) => {
   try {
     const eventData = req.body;
 
-    // Validate the event data before creating it
-    validateEventData(eventData);
-
     const newEvent = await Event.create(eventData);
 
     res.status(201).json({
@@ -65,9 +51,6 @@ const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
-
-    // Validate the updated event data
-    validateEventData(updatedData);
 
     const event = await Event.findByPk(id);
     if (!event) {
@@ -136,7 +119,7 @@ const attendEvent = async (req, res) => {
     event.attendees.push(req.body.userId); // Assuming user ID is sent in request body
 
     await event.save();
-    res.status(200).json({ message: `You have successfully registered for the event: ${event.name}` });
+    res.status(200).json({ message: `You have successfully registered for the event: ${event.title}` });
   } catch (error) {
     console.error('Error attending event:', error);
     res.status(500).json({ message: 'An error occurred while attending the event.' });

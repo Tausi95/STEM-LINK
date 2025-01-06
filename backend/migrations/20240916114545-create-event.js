@@ -21,6 +21,18 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
+      mentorId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      profileId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      creatorId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

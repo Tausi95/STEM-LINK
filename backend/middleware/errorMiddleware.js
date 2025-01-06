@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 // Middleware to handle 404 errors
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
@@ -21,4 +23,17 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-module.exports = { notFound, errorHandler }; // Export error handling middleware
+// Middleware to handle validation errors
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  next();
+};
+
+module.exports = { 
+  notFound, 
+  errorHandler,
+  handleValidationErrors
+}; // Export error handling middleware
