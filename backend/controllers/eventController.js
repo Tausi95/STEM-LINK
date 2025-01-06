@@ -1,16 +1,5 @@
-const Event = require('../models/event');
+const { Event } = require('../models');
 const { Op } = require('sequelize'); // In case you want to handle specific queries, like date ranges
-
-// Helper function to validate event data
-const validateEventData = (eventData) => {
-  const { name, date, location } = eventData;
-  if (!name || !date || !location) {
-    throw new Error('Event name, date, and location are required.');
-  }
-  if (new Date(date) <= new Date()) {
-    throw new Error('Event date must be in the future.');
-  }
-};
 
 const getEvents = async (req, res) => {
   try {
@@ -42,9 +31,6 @@ const getEventById = async (req, res) => {
 const createEvent = async (req, res) => {
   try {
     const eventData = req.body;
-
-    // Validate the event data before creating it
-    validateEventData(eventData);
 
     const newEvent = await Event.create(eventData);
 
