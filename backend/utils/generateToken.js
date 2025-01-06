@@ -6,7 +6,7 @@ const generateToken = (id) => {
   }
 
   try {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id }, process.env.JWT_SECRET ?? "secret", {
       expiresIn: '30d',
     });
   } catch (error) {
