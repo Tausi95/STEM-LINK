@@ -7,7 +7,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const mentorRoutes = require('./routes/mentorRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const networkRoutes = require('./routes/networkRoutes');
-const dashboardRoutes = require('.routes/dashboardRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const cors = require('cors');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
