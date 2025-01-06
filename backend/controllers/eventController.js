@@ -52,9 +52,6 @@ const updateEvent = async (req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
 
-    // Validate the updated event data
-    validateEventData(updatedData);
-
     const event = await Event.findByPk(id);
     if (!event) {
       return res.status(404).json({ message: 'Event not found.' });
