@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 // Middleware to handle 404 errors
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);

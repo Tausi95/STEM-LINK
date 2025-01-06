@@ -1,5 +1,5 @@
 // backend/middleware/validateEvent.js
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 const { handleValidationErrors } = require('./errorMiddleware');
 
 const eventTypes = ['workshop', 'seminar', 'webinar', 'conference'];
