@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Create Events table with updated description column type
+    // Create Events table
     await queryInterface.createTable('Events', {
       id: {
         type: Sequelize.INTEGER,
@@ -19,7 +19,7 @@ module.exports = {
         allowNull: true
       },
       description: {
-        type: Sequelize.TEXT, // Changed from VARCHAR(255) to TEXT
+        type: Sequelize.STRING,
         allowNull: true
       },
       type: {
