@@ -1,4 +1,4 @@
-const Profile = require('../models/profile');
+const { Profile, User } = require('../models');
 
 // Helper function to validate the profile data
 const validateProfileData = (data) => {
@@ -9,21 +9,30 @@ const validateProfileData = (data) => {
   // Optionally, add more validation, like checking if email is in valid format
 };
 
-const getProfilesWithConnections = async () => {
+const getProfilesWithConnections = async (req, res) => {
   try {
     const profiles = await Profile.findAll({
       include: [
+      {
+        model: Profile,
+        as: 'connections',
+        include: [
         {
-          model: Profile,
-          as: 'connections',
-          attributes: ['id', 'name', 'email'], // Specify which fields you need from the connections
+          model: User,
+          as: 'user',
+          attributes: ['id', 'username', 'email']
         }
+        ]
+      }
       ]
     });
-    return profiles;
+    if (!profiles.length) {
+      return res.status(404).json({ message: "No profiles found." });
+    }
+    res.status(200).json(profiles);
   } catch (error) {
     console.error('Error fetching profiles with connections:', error); // Log error for debugging
-    throw new Error('An error occurred while fetching profiles: ' + error.message);
+    res.status(500).json({ error: "An error occurred while fetching profiles: " + error.message });
   }
 };
 

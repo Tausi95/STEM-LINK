@@ -11,17 +11,7 @@ const validateProfileUpdate = [
 ];
 
 // Route to get all profiles with their connections
-router.get('/connections', async (req, res) => {
-  try {
-    const profiles = await getProfilesWithConnections();
-    if (!profiles.length) {
-      return res.status(404).json({ message: "No profiles found." });
-    }
-    res.status(200).json(profiles);
-  } catch (error) {
-    res.status(500).json({ error: "An error occurred while fetching profiles: " + error.message });
-  }
-});
+router.get('/connections', getProfilesWithConnections);
 
 // Route to update profile based on role
 router.put('/:role', validateProfileUpdate, async (req, res) => {

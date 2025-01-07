@@ -15,28 +15,7 @@ const validateConnection = [
 router.get('/', networkController.getConnections);
 
 // Route to add a new connection
-router.post('/', validateConnection, async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  try {
-    const { profileId, connectionId } = req.body;
-
-    // Check if the connection already exists (to avoid duplicates)
-    const existingConnection = await addConnection(profileId, connectionId);
-    if (existingConnection) {
-      return res.status(409).json({ error: "Connection already exists." });
-    }
-
-    // Assuming addConnection creates the new connection and returns it
-    const newConnection = await addConnection(profileId, connectionId);
-    res.status(201).json({ message: "Connection added successfully.", connection: newConnection });
-  } catch (error) {
-    res.status(400).json({ error: "An error occurred while adding the connection: " + error.message });
-  }
-});
+router.post('/', createNetworkValidator, networkController.addConnection);
 
 module.exports = router;
 
