@@ -1,14 +1,5 @@
 const { Network } = require('../models');
 
-// Helper function to validate connection data
-const validateConnectionData = (data) => {
-  const { userId, connectionId } = data;
-  if (!userId || !connectionId) {
-    throw new Error('User ID and connection ID are required.');
-  }
-  // Optionally, add more validation logic, like checking if the IDs exist in the database
-};
-
 const getConnections = async (req, res) => {
   try {
     const connections = await Network.findAll();
@@ -25,9 +16,6 @@ const getConnections = async (req, res) => {
 const addConnection = async (req, res) => {
   try {
     const connectionData = req.body;
-
-    // Validate connection data before proceeding
-    validateConnectionData(connectionData);
 
     // Check if the connection already exists
     const existingConnection = await Network.findOne({
