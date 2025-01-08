@@ -1,4 +1,4 @@
-const Mentor = require('../models/mentor'); // Sequelize model
+const { Mentor } = require('../models');
 
 // Helper function to validate application data
 const validateApplicationData = (data) => {
@@ -48,7 +48,22 @@ const applyForMentorship = async (req, res) => {
   }
 };
 
+const getMentorsByField = async (req, res) => {
+  const field = req.params.field;
+  try {
+    const mentors = await Mentor.findAll({ where: { field } });
+    if (!mentors || mentors.length === 0) {
+      return res.status(404).json({ message: `No mentors found in the field: ${field}.` });
+    }
+    res.status(200).json(mentors);
+  } catch (error) {
+    console.error('Error fetching mentors by field:', error); // Log for debugging
+    res.status(500).json({ message: 'An error occurred while fetching mentors.' });
+  }
+}
+
 module.exports = {
   getMentors,
   applyForMentorship,
+  getMentorsByField,
 };
