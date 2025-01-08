@@ -2,6 +2,7 @@
 const { body } = require('express-validator');
 const { User, Profile } = require("../models/");
 const { camelCaseToSentenceCase } = require('../utils/strs');
+const { handleValidationErrors } = require('./errorMiddleware');
 
 
 /**
@@ -52,7 +53,19 @@ function validateUser(field, isRequired = true, isUserProfile = false) {
       : userExists(value, fieldName));
 }
 
+const profileRoles = ['student', 'mentor', 'event_creator', 'investor'];
+
+const updateProfileValidator = [
+  body('name').optional().isString().withMessage('Name must be a string'),
+  body('bio').optional().isString().withMessage('Bio must be a string'),
+  body('fieldOfInterest').isString().withMessage('Field of interest must be a string'),
+  body('role').optional().isIn(profileRoles).withMessage(`Profile role must be one of the ${profileRoles.join(', ')}`),
+  validateUser('userId', false),
+  handleValidationErrors
+]
+
 module.exports = {
   validateUser,
   userExists,
+  updateProfileValidator,
 };

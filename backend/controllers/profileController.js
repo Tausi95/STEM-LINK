@@ -1,14 +1,5 @@
 const { Profile, User } = require('../models');
 
-// Helper function to validate the profile data
-const validateProfileData = (data) => {
-  const { name, email, role } = data;
-  if (!name || !email || !role) {
-    throw new Error('Name, email, and role are required.');
-  }
-  // Optionally, add more validation, like checking if email is in valid format
-};
-
 const getProfilesWithConnections = async (req, res) => {
   try {
     const profiles = await Profile.findAll({
@@ -38,27 +29,20 @@ const getProfilesWithConnections = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { role } = req.params;
+    const { id } = req.params;
     const profileData = req.body;
 
-    // Validate the input data
-    validateProfileData(profileData);
+    const profile = Profile.findByPk(id);
+    if(!profile) return res.status(404).json({message: "Profile not found"});
 
-    const [updatedRows] = await Profile.update(profileData, {
-      where: { role },
-    });
+    profile.update(profileData);
 
-    if (updatedRows === 0) {
-      return res.status(404).json({ message: 'Profile not found or no changes detected' });
-    }
-
-    return { message: 'Profile updated successfully' };
+    return res.status(200).json({ message: 'Profile updated successfully.', profile });
   } catch (error) {
-    console.error('Error updating profile:', error); // Log error for debugging
-    if (error.message) {
-      throw new Error(error.message); // Handle validation errors
-    }
-    throw new Error('An error occurred while updating the profile: ' + error.message);
+    console.error('Error updating profile:', error);
+    res.status(500).json({
+      message: 'An error occurred while updating the profile: ' + error.message
+    });
   }
 };
 
