@@ -46,7 +46,21 @@ const updateProfile = async (req, res) => {
   }
 };
 
+async function createProfile(req, res) {
+  try {
+    const profile = await Profile.create(req.body);
+    res.status(201).json(profile);
+  } catch (error) {
+    console.error("Error occurred while creating a profile", error);
+    res.status(500).json({
+      message: "An Error occurred while creating a profile"
+    })
+  }
+
+}
+
 module.exports = {
   getProfilesWithConnections,
   updateProfile,
+  createProfile,
 };

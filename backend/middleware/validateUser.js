@@ -58,9 +58,18 @@ const profileRoles = ['student', 'mentor', 'event_creator', 'investor'];
 const updateProfileValidator = [
   body('name').optional().isString().withMessage('Name must be a string'),
   body('bio').optional().isString().withMessage('Bio must be a string'),
-  body('fieldOfInterest').isString().withMessage('Field of interest must be a string'),
+  body('fieldOfInterest').optional().isString().withMessage('Field of interest must be a string'),
   body('role').optional().isIn(profileRoles).withMessage(`Profile role must be one of the ${profileRoles.join(', ')}`),
   validateUser('userId', false),
+  handleValidationErrors
+]
+
+const createProfileValidator = [
+  body('name').notEmpty().withMessage("The profile name is required").isString().withMessage('Name must be a string'),
+  body('bio').notEmpty().withMessage("The profile bio is required").isString().withMessage('Bio must be a string'),
+  body('fieldOfInterest').notEmpty().withMessage("The field of interest is required").isString().withMessage('Field of interest must be a string'),
+  body('role').notEmpty().withMessage("The profile role is required").isIn(profileRoles).withMessage(`Profile role must be one of the ${profileRoles.join(', ')}`),
+  validateUser('userId'),
   handleValidationErrors
 ]
 
@@ -68,4 +77,5 @@ module.exports = {
   validateUser,
   userExists,
   updateProfileValidator,
+  createProfileValidator,
 };
