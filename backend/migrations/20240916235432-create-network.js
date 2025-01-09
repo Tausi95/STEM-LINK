@@ -15,6 +15,9 @@ module.exports = {
       profileId: {
         type: Sequelize.INTEGER
       },
+      ownerId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

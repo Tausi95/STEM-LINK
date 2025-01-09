@@ -1,59 +1,66 @@
-const Profile = require('../models/profile');
+const { Profile, User } = require('../models');
 
-// Helper function to validate the profile data
-const validateProfileData = (data) => {
-  const { name, email, role } = data;
-  if (!name || !email || !role) {
-    throw new Error('Name, email, and role are required.');
-  }
-  // Optionally, add more validation, like checking if email is in valid format
-};
-
-const getProfilesWithConnections = async () => {
+const getProfilesWithConnections = async (req, res) => {
   try {
     const profiles = await Profile.findAll({
       include: [
+      {
+        model: Profile,
+        as: 'connections',
+        include: [
         {
-          model: Profile,
-          as: 'connections',
-          attributes: ['id', 'name', 'email'], // Specify which fields you need from the connections
+          model: User,
+          as: 'user',
+          attributes: ['id', 'username', 'email']
         }
+        ]
+      }
       ]
     });
-    return profiles;
+    if (!profiles.length) {
+      return res.status(404).json({ message: "No profiles found." });
+    }
+    res.status(200).json(profiles);
   } catch (error) {
     console.error('Error fetching profiles with connections:', error); // Log error for debugging
-    throw new Error('An error occurred while fetching profiles: ' + error.message);
+    res.status(500).json({ error: "An error occurred while fetching profiles: " + error.message });
   }
 };
 
 const updateProfile = async (req, res) => {
   try {
-    const { role } = req.params;
+    const { id } = req.params;
     const profileData = req.body;
 
-    // Validate the input data
-    validateProfileData(profileData);
+    const profile = Profile.findByPk(id);
+    if(!profile) return res.status(404).json({message: "Profile not found"});
 
-    const [updatedRows] = await Profile.update(profileData, {
-      where: { role },
-    });
+    profile.update(profileData);
 
-    if (updatedRows === 0) {
-      return res.status(404).json({ message: 'Profile not found or no changes detected' });
-    }
-
-    return { message: 'Profile updated successfully' };
+    return res.status(200).json({ message: 'Profile updated successfully.', profile });
   } catch (error) {
-    console.error('Error updating profile:', error); // Log error for debugging
-    if (error.message) {
-      throw new Error(error.message); // Handle validation errors
-    }
-    throw new Error('An error occurred while updating the profile: ' + error.message);
+    console.error('Error updating profile:', error);
+    res.status(500).json({
+      message: 'An error occurred while updating the profile: ' + error.message
+    });
   }
 };
+
+async function createProfile(req, res) {
+  try {
+    const profile = await Profile.create(req.body);
+    res.status(201).json(profile);
+  } catch (error) {
+    console.error("Error occurred while creating a profile", error);
+    res.status(500).json({
+      message: "An Error occurred while creating a profile"
+    })
+  }
+
+}
 
 module.exports = {
   getProfilesWithConnections,
   updateProfile,
+  createProfile,
 };

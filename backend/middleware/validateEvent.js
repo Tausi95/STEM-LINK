@@ -2,6 +2,7 @@
 const { body } = require('express-validator');
 const { handleValidationErrors } = require('./errorMiddleware');
 const { User } = require("../models/");
+const { validateUser } = require('./validateUser');
 
 const eventTypes = ['workshop', 'seminar', 'webinar', 'conference'];
 
@@ -36,15 +37,7 @@ const updateEventValidator = [
 ];
 
 const attendEventValidator = [
-  body('userId').notEmpty().withMessage('User ID is required')
-  .custom(async (value) => {
-    const user = await User.findByPk(value);
-
-    if (!user) {
-      throw new Error('User ID must exist in the users table');
-    }
-    return true;
-  }),
+  validateUser(),
   handleValidationErrors,
 ];
 

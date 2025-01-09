@@ -13,10 +13,20 @@ module.exports = {
         type: Sequelize.STRING
       },
       bio: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      fieldOfInterest: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      role: {
+        type: Sequelize.ENUM('student', 'mentor', 'event_creator', 'investor'),
+        allowNull: false
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

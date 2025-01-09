@@ -18,6 +18,18 @@ module.exports = {
       experience: {
         type: Sequelize.TEXT
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      profileId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      networkId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

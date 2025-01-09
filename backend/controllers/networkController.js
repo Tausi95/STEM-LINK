@@ -1,17 +1,8 @@
-const Connection = require('../models/network');
-
-// Helper function to validate connection data
-const validateConnectionData = (data) => {
-  const { userId, connectionId } = data;
-  if (!userId || !connectionId) {
-    throw new Error('User ID and connection ID are required.');
-  }
-  // Optionally, add more validation logic, like checking if the IDs exist in the database
-};
+const { Network } = require('../models');
 
 const getConnections = async (req, res) => {
   try {
-    const connections = await Connection.findAll();
+    const connections = await Network.findAll();
     if (!connections || connections.length === 0) {
       return res.status(404).json({ message: 'No connections found.' });
     }
@@ -26,11 +17,8 @@ const addConnection = async (req, res) => {
   try {
     const connectionData = req.body;
 
-    // Validate connection data before proceeding
-    validateConnectionData(connectionData);
-
     // Check if the connection already exists
-    const existingConnection = await Connection.findOne({
+    const existingConnection = await Network.findOne({
       where: {
         userId: connectionData.userId,
         connectionId: connectionData.connectionId,
@@ -38,13 +26,13 @@ const addConnection = async (req, res) => {
     });
 
     if (existingConnection) {
-      return res.status(400).json({ message: 'Connection already exists.' });
+      return res.status(400).json({ message: 'Network already exists.' });
     }
 
     // Create the new connection
-    const newConnection = await Connection.create(connectionData);
+    const newConnection = await Network.create(connectionData);
     res.status(201).json({
-      message: 'Connection added successfully.',
+      message: 'Network added successfully.',
       connection: newConnection, // Optional: Return the created connection data
     });
   } catch (error) {
