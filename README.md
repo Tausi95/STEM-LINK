@@ -46,7 +46,7 @@ STEMLINK is an innovative web application designed to foster connections among p
 
 ## Installation
 
-To get started with STEMProlinks, follow the steps below:
+To get started with STEMLINK, follow the steps below:
 
 ### Prerequisites
 
@@ -171,7 +171,7 @@ Make sure to follow the coding guidelines and include relevant tests for new fea
 
 ### Reporting Issues
 
-If you encounter any issues or bugs, feel free to [open an issue](https://github.com/Tausi95/STEMProlinks/issues) on GitHub.
+If you encounter any issues or bugs, feel free to [open an issue](https://github.com/Tausi95/STEM-LINK/issues) on GitHub.
 
 ## License
 
