@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import eventService from '../../services/eventService'; // Import event service
-import '../../styles/Events.css';
+import '../../assets/css/Events.css';
 
 function Events() {
   const [activeEventTab, setActiveEventTab] = useState(0);

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../store/auth';
 import { useNavigate } from 'react-router-dom';
-import userService from '../../services/userService';
-import '../../styles/SignUp.css';
+import userService from '../services/userService';
+import '../assets/css/SignUp.css';
 
 const SignUp = () => {
   const [username, setUsername] = useState('')

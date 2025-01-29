@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTwitter, FaFacebook, FaInstagram, FaWhatsapp, FaDiscord } from 'react-icons/fa';
-import '../../styles/Footer.css'; // Ensure proper path to the CSS file
+import '../../assets/css/Footer.css'; // Ensure proper path to the CSS file
 
 function Footer() {
   return (

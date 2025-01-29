@@ -1,7 +1,6 @@
 import React from 'react';
-import '../../styles/About.css';
+import '../assets/css/About.css';
 import { FaLinkedin, FaGithub, FaTwitter, FaEnvelope, FaPhone } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // If routing is being used
 
 const teamMembers = [
   {

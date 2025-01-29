@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../styles/Network.css';
+import '../../assets/css/Network.css';
 
 function Network() {
   const [searchTerm, setSearchTerm] = useState('');

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaYoutube, FaInstagram, FaTwitter, FaLinkedin, FaWhatsapp, FaGithub, Falinkedin,  } from 'react-icons/fa';
-import '../../styles/Sidebar.css';
+import { FaYoutube, FaInstagram, FaTwitter, FaLinkedin, FaWhatsapp, FaGithub, } from 'react-icons/fa';
+import '../../assets/css/Sidebar.css';
 
 const Sidebar = () => {
   return (

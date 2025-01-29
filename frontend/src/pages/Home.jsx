@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../layout/Sidebar.js'; // Assuming Sidebar is imported for layout purposes
-import '../../styles/Home.css'; // Optional for custom styles you may still need
+import '../assets/css/Home.css';
 
 function Home() {
   return (

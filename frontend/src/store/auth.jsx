@@ -1,0 +1,47 @@
+import React, { createContext, useContext, useState } from 'react';
+
+const AuthContext = createContext();
+
+export function AuthProvider ({ children }) {
+  // Initialize `isAuthenticated` from sessionStorage
+  const [isAuthenticated, setIsLoggedIn] = useState(() => {
+    const token = sessionStorage.getItem('token');
+    return !!token;
+  });
+
+  // Initialize `user` from sessionStorage
+  const [user, setUser] = useState(() => {
+    const userData = sessionStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  });
+
+  // Login function
+  const login = (token, userData) => {
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(userData));
+    setIsLoggedIn(true);
+    setUser(userData);
+  };
+
+  // Logout function
+  const logout = () => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export function useAuth () {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

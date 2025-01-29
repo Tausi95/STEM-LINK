@@ -1,7 +1,7 @@
 // Profile.js
 import React, { useState, useEffect } from 'react';
-import userService from '../../services/userService';  // Import the entire userService
-import '../../styles/Profile.css';
+import userService from '../services/userService';
+import '../assets/css/Profile.css';
 
 const Profile = () => {
   const [role, setRole] = useState('student');

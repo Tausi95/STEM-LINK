@@ -30,7 +30,27 @@ STEMLINK is an innovative web application designed to foster connections among p
 - Frontend: 
   - React (JavaScript)
   - Axios for API calls
-  - CSS for styling
+  - Tailwind CSS for styling
+  - The project structure is as follows
+   src/
+   ├── components/        # Reusable components (e.g., buttons, inputs, etc.)
+   ├── layouts/           # Layout components for public and admin pages
+   ├── pages/             # Public pages
+   │   ├── Login.jsx
+   │   ├── Signup.jsx
+   │   ├── About.jsx
+   │   ├── admin/          # Private (protected) pages
+   │   │   ├── Dashboard.jsx
+   │   │   ├── Profile.jsx
+   │   │   ├── Settings.jsx
+   ├── services/          # API calls, authentication logic, etc.
+   ├── store/             # State management (e.g., Redux, Pinia, or Context API)
+   ├── utils/             # Utility functions (e.g., auth helpers)
+   ├── App.jsx            # Main app component
+   ├── index.jsx          # Entry point
+   ├── index.css          # Main CSS Entry point (tailwindcss)
+   
+
 - Backend:
   - Node.js (Express)
   - Sequelize (ORM) for database management

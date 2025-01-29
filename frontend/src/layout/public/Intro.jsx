@@ -1,7 +1,7 @@
 // src/components/Intro.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../styles/Intro.css';
+import '../../assets/css/Intro.css';
 
 const Intro = () => {
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../store/auth';
 import '../../assets/Images/logo.JPG';
-import '../../styles/Header.css';
+// import '../../assets/css/Header.css';
 
 const Header = () => {
   const { isLoggedIn, user, setIsLoggedIn, setUser } = useAuth();

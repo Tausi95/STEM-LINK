@@ -4,7 +4,7 @@
   padding: 50px;
 }
 .cover-image {
-  background-image: url('../assets/Images/bckg.jpg');
+  background-image: url('../Images/bckg.jpg');
   height: 300px;
   background-size: cover;
 }

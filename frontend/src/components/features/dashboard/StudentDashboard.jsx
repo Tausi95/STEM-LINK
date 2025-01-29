@@ -4,7 +4,8 @@ import { Bar, Line } from 'react-chartjs-2';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import dashboardService from '../../../services/dashboardService';
-import '../../../styles/StudentDashboard.css';
+import '../../../assets/css/StudentDashboard.css';
+
 const StudentDashboard = ({ dashboardData }) => {
   const { user, progress, attendance, subjects, pendingTests, school, tutors, discussions, scores } = dashboardData;
 
