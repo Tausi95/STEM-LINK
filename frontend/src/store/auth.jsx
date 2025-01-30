@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
+import userService from '@/services/userService';
 
 const AuthContext = createContext();
 
 export function AuthProvider ({ children }) {
   // Initialize `isAuthenticated` from sessionStorage
-  const [isAuthenticated, setIsLoggedIn] = useState(() => {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const token = sessionStorage.getItem('token');
     return !!token;
   });
@@ -16,10 +17,12 @@ export function AuthProvider ({ children }) {
   });
 
   // Login function
-  const login = (token, userData) => {
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('user', JSON.stringify(userData));
-    setIsLoggedIn(true);
+  const login = async (userData) => {
+    const { data } = await userService.login(userData);
+    sessionStorage.setItem('token', data.token);
+    sessionStorage.setItem('user', JSON.stringify(data.user));
+    setUser(data.user);
+    setIsAuthenticated(true);
     setUser(userData);
   };
 
@@ -27,7 +30,7 @@ export function AuthProvider ({ children }) {
   const logout = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
-    setIsLoggedIn(false);
+    setIsAuthenticated(false);
     setUser(null);
   };
 
