@@ -4,6 +4,7 @@ import { useAuth } from '@/store/auth';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import InputField from '@/components/inputs/InputField';
+import showToast from '../utils/toast';
 
 export default function LoginPage (){
 
@@ -24,9 +25,10 @@ export default function LoginPage (){
   const handleSubmit = async (user) => {
     try {
       await login(user);
+      showToast('Login successful', 'success');
       navigate('/');
     } catch (error) {
-      alert(error.message || 'An error occurred. Please try again.');
+      showToast(error.message || 'An error occurred. Please try again.', 'error');
     }
   };
 
