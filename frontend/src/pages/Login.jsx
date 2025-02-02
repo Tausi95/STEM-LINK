@@ -11,7 +11,7 @@ import TextLink from '../components/common/TextLink';
 
 export default function LoginPage (){
 
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   const { login } = useAuth()
   
   const user = {
@@ -29,7 +29,7 @@ export default function LoginPage (){
     try {
       await login(user);
       showToast('Login successful', 'success');
-      navigate('/');
+      return navigate('/admin');
     } catch (error) {
       showToast(error.message || 'An error occurred. Please try again.', 'error');
     }
