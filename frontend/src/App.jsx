@@ -20,6 +20,7 @@ import SubjectDetail from './pages/SubjectDetail';
 import PublicLayout from './layout/public';
 import AdminLayout from './layout/admin';
 import DefaultToastContainer from './components/common/DefaultToastContainer';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 export default function App() {
   return (
@@ -41,8 +42,10 @@ export default function App() {
             <Route path="/subjects/:subjectId" element={<SubjectDetail />} />
           </Route>
 
+          
           {/* Dashboard Routes */}
           <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/network" element={<Network />} />
             <Route path="/mentorship" element={<Mentorship />} />
