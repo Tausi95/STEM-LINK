@@ -1,113 +1,133 @@
-import React, { useState } from 'react';
-import { useAuth } from '../store/auth';
-import { useNavigate } from 'react-router-dom';
-import userService from '../services/userService';
-import '../assets/css/SignUp.css';
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/store/auth";
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import InputField from "@/components/inputs/InputField";
+import SelectField from "../components/inputs/SelectField";
+import showToast from "../utils/toast";
+import { mapToOptions } from "../utils/options";
 
-const SignUp = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('student');
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-   const { setIsLoggedIn, setUser } = useAuth();
-    const navigate = useNavigate();
+export default function SignupPage() {
+  const { register } = useAuth();
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const user = {
+    email: "",
+    password: "",
+    confirm_password: "",
+    username: "",
+    role: "",
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validations = Yup.object({
+    email: Yup.string().email("Invalid email address").required(),
+    username: Yup.string().required(),
+    role: Yup.string().required().oneOf(["student", "mentor"]),
+    password: Yup.string()
+      .required()
+      .min(6)
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/,
+        "Password must contain at least one letter, one number and one special character"
+      ),
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
+    confirm_password: Yup.string().equals(
+      [Yup.ref("password")],
+      "Passwords must match"
+    ),
+  });
 
-    setError('');
-    setIsSubmitting(true);
-
+  const handleSubmit = async (user) => {
     try {
-      const { data } = await userService.signUp(username, email, password, role);
-      sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('user', JSON.stringify(data.user));
-      setIsLoggedIn(true);
-      setUser(data.user);
-      navigate('/');
+      await register(user);
+      showToast("Registered successful", "success");
+      return <Navigate to="/" />;
     } catch (error) {
-      setError(error.message || 'Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      showToast(
+        error.message || "An error occurred. Please try again.",
+        "error"
+      );
     }
   };
 
   return (
-    <div className="sign-up">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            placeholder="Enter your username"
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/logo.webp"
+            alt="Stem-Link"
+            className="h-18 w-18 size-10 rounded-full ring-2 ring-white"
           />
         </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="Enter your email"
-          />
+        <p className="font-bold mb-6">Complete the following details to register</p>
+
+        <Formik
+          initialValues={user}
+          validationSchema={validations}
+          onSubmit={handleSubmit}
+        >
+          {() => (
+            <Form>
+              <InputField
+                name="username"
+                label="Username"
+                type="text"
+                placeholder="Enter your username"
+              />
+              <InputField
+                name="email"
+                label="Email Address"
+                type="email"
+                placeholder="Enter your email address"
+              />
+
+              <InputField
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+              />
+
+              <InputField
+                name="confirm_password"
+                label="Confirm Password"
+                type="password"
+                placeholder="Confirm your password"
+              />
+
+              <SelectField 
+                name="role" 
+                label="Role"
+                placeholder="Select your role"
+                options={ mapToOptions([
+                  "student",
+                  "mentor"
+                ])} 
+              />
+
+              <div className="flex items-center justify-between">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block w-full"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+
+        {/* Sign In Section */}
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Already have account?{" "}
+            <Link to="/login" className="text-blue-400 hover:text-blue-400">
+              Sign In
+            </Link>
+          </p>
         </div>
-        <div className="form-group">
-          <label>Role:</label>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            placeholder="Select user role"
-          >
-            <option value="student">Student</option>
-            <option value="mentor">Mentor</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Enter your password"
-          />
-          <button type="button" onClick={togglePasswordVisibility}>
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
-        </div>
-        <div className="form-group">
-          <label>Confirm Password:</label>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            placeholder="Confirm your password"
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing Up...' : 'Sign Up'}
-        </button>
-      </form>
+      </div>
     </div>
   );
-};
-
-export default SignUp;
+}

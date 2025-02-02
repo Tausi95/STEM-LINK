@@ -34,8 +34,17 @@ export function AuthProvider ({ children }) {
     setUser(null);
   };
 
+  // Register function
+  const register = async (userData) => {
+    const { data } = await userService.register(userData);
+    sessionStorage.setItem('token', data.token);
+    sessionStorage.setItem('user', JSON.stringify(data.user));
+    setUser(data.user);
+    setIsAuthenticated(true);
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

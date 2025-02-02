@@ -17,14 +17,9 @@ const userService = {
     }
   },
 
-  signUp: async (username, email, password, role) => {
+  register: async (newUser) => {
     try {
-      const response = await API.post(ENDPOINTS.REGISTER, { 
-        email, 
-        password,
-        username,
-        role
-      });
+      const response = await API.post(ENDPOINTS.REGISTER, newUser);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');
