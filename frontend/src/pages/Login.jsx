@@ -1,10 +1,13 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/store/auth';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import InputField from '@/components/inputs/InputField';
 import showToast from '../utils/toast';
+import CheckboxField from '../components/inputs/CheckboxField';
+import Button from '../components/common/Button';
+import TextLink from '../components/common/TextLink';
 
 export default function LoginPage (){
 
@@ -56,29 +59,13 @@ export default function LoginPage (){
                 type="password"
                 placeholder="Enter your password"
               />
+
               <div className="mb-6 flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name='rememberMe'
-                    type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                    Remember me
-                  </label>
-                </div>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
-                  Forgot password?
-                </a>
+                <CheckboxField name="rememberMe" label="Remember me" />
+                <TextLink label="Forgot password?" to="/forgot-password" />
               </div>
               <div className="flex items-center justify-between">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
-                >
-                  Sign In
-                </button>
+                <Button type="submit" fill='outline' block>Login</Button>
               </div>
             </Form>
           )}
@@ -86,12 +73,9 @@ export default function LoginPage (){
 
         {/* Sign Up Section */}
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">
-            Don't have account?{' '} 
-            <Link to="/signup" className='text-blue-400 hover:text-blue-400'>
-              Sign Up
-            </Link>
-          </p>
+           <p className="text-sm text-gray-600">
+              Don't have account? <TextLink label="Sign Up" to="/signup" />
+            </p>
         </div>
       </div>
     </div>
