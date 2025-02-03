@@ -8,23 +8,18 @@ const ENDPOINTS = {
 };
 
 const userService = {
-  login: async (email, password) => {
+  login: async (user) => {
     try {
-      const response = await API.post(ENDPOINTS.LOGIN, { email, password });
+      const response = await API.post(ENDPOINTS.LOGIN, user);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Login failed.');
     }
   },
 
-  signUp: async (username, email, password, role) => {
+  register: async (newUser) => {
     try {
-      const response = await API.post(ENDPOINTS.REGISTER, { 
-        email, 
-        password,
-        username,
-        role
-      });
+      const response = await API.post(ENDPOINTS.REGISTER, newUser);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Sign-up failed.');
